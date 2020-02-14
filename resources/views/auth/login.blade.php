@@ -35,12 +35,12 @@
 				<div class="back">
                     @if (Route::has('register'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Dont have an account?') }}</a>
                     </li>
                 @endif
 				</div>
 				<div class="footer">
-                    <p>© 2020 Pooled. All Rights Reserved | Design and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
+                    <p>© 2020 MiniVentory. All Rights Reserved | Design and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
 				</div>
 	</div>
 	</div>

@@ -37,32 +37,28 @@
                   <!--header start here-->
                      <div class="header-main">
                          <div class="logo-w3-agile">
-                                     <h1><a href="{{route('home')}}">MiniVentory</a></h1>
+                                     <h1><a href="{{route('home')}}">MiniVent</a></h1>
                                  </div>
-                         <div class="w3layouts-left">
-       
-                            
-                            <div class="clearfix"> </div>				
-						</div>
-						<div class="profile_details w3l">		
+						<div class="profile_details w3l pull-right">		
 								<ul>
 									<li class="dropdown profile_details_drop">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-											<div class="profile_img">	
-												<span class="prfil-img"><img src="images/in4.jpg" alt=""> </span> 
 												<div class="user-name">
-													<p> {{ Auth::user()->name }}</p>
+													<p> {{ Auth::user()->username }}</p>
 													<span>Administrator</span>
 												</div>
 												<i class="fa fa-angle-down"></i>
 												<i class="fa fa-angle-up"></i>
 												<div class="clearfix"></div>	
-											</div>	
 										</a>
 										<ul class="dropdown-menu drp-mnu">
-											<li> <a href="{{ route('logout') }}"><i class="fa fa-sign-out"  onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                   {{ __('Logout') }}></i> Logout</a> </li>
+											<li> <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"><i class="fa fa-sign-out">  
+                                   {{ __('Logout') }}</i></a> 
+                                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                  </li>
 										</ul>
 									</li>
 								</ul>
@@ -72,6 +68,38 @@
 				</div>
 
         <main class="py-4">
+          @if ($message = Session::get('success'))
+          <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{session('success')}}
+            </div>
+            @endif
+    
+            @if ($message = Session::get('info'))
+            <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Info!</strong> {{session('info')}}
+            </div>
+            @endif
+    
+            @if ($message = Session::get('warning'))
+            <div class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Warning!</strong> {{session('warning')}}
+            </div>
+            @endif
+    
+            @if ($errors->any())
+            <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Whoops!</strong> {{session('warning')}}<br><br>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+            </div>
+            @endif
             @yield('content')
         </main>
 
@@ -99,7 +127,7 @@
     <!--inner block end here-->
     <!--copy rights start here-->
     <div class="copyrights">
-         <p>© 2020 Pooled. All Rights Reserved | Design and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
+         <p>© 2020 MiniVentory. All Rights Reserved | Design and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
     </div>	
     <!--COPY rights end here-->
     </div>
@@ -108,7 +136,7 @@
     	<!--/sidebar-menu-->
         <div class="sidebar-menu">
             <header class="logo1">
-                <a href="{{route('home')}}" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> 
+                <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> 
             </header>
                 <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
                    <div class="menu">
@@ -155,26 +183,26 @@
                       </div>
                       <div class="clearfix"></div>		
                     </div>
-    <script>
-        var toggle = true;
-                    
-        $(".sidebar-icon").click(function() {                
-          if (toggle)
-          {
-            $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
-            $("#menu span").css({"position":"absolute"});
-          }
-          else
-          {
-            $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
-            setTimeout(function() {
-              $("#menu span").css({"position":"relative"});
-            }, 400);
-          }
-                        
-                        toggle = !toggle;
-                    });
-        </script>
+                    <script>
+                      var toggle = true;
+                            
+                      $(".sidebar-icon").click(function() {                
+                        if (toggle)
+                        {
+                        $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+                        $("#menu span").css({"position":"absolute"});
+                        }
+                        else
+                        {
+                        $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+                        setTimeout(function() {
+                          $("#menu span").css({"position":"relative"});
+                        }, 400);
+                        }
+                              
+                              toggle = !toggle;
+                            });
+                      </script>
 <!--js -->
 <script src="{{asset('js/jquery-2.1.4.min.js')}}"></script>
 <script src="{{ asset('js/app.js') }}" defer></script>

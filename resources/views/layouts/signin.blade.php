@@ -32,6 +32,38 @@
 <body>
 
     <main class="py-4">
+        @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{session('success')}}
+          </div>
+          @endif
+
+          @if ($message = Session::get('info'))
+          <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Info!</strong> {{session('info')}}
+          </div>
+          @endif
+
+          @if ($message = Session::get('warning'))
+          <div class="alert alert-warning">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Warning!</strong> {{session('warning')}}
+          </div>
+          @endif
+
+          @if ($errors->any())
+          <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Whoops!</strong> {{session('warning')}}<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+          </div>
+          @endif
         @yield('content')
     </main>
 
