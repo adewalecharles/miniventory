@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $brands = Brand::where('company_id',  Auth::user()->company->id)->get();
+        $products = Product::where('company_id',  Auth::user()->company->id)->get();
+        $categories = Category::where('company_id',  Auth::user()->company->id)->get();
+        return view('home', compact('brands', 'products', 'categories'));
     }
 }

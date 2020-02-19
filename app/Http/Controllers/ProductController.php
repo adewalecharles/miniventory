@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -14,7 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = Product::where('company_id', Auth::user()->company->id)->get();
+        return view('product.index', compact('product'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     /**
@@ -24,7 +29,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::where('company_id',  Auth::user()->company->id)->get();
+        $categories = Category::where('company_id',  Auth::user()->company->id)->get();
+        return view('product.create', compact('brands', 'categories'));
     }
 
     /**
@@ -35,7 +42,29 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'picture' => ['mimes: jpg, jpeg, png, svg, gif', 'max:1028'],
+            'name' => 'required',
+            'qty' => '',
+            'purchased_date' => 'required',
+            'expiry_date' => '',
+            'amount' => 'required',
+            'category_id' => '',
+            'brand_id' => '',
+            'company_id' => 'required',
+        ]);
+
+        if ($request->has('picture')) {
+            $avataruploaded = request()->file('picture');
+            $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
+            $avatarpath = public_path('/event/');
+            $avataruploaded->move($avatarpath, $avatarname);
+        }
+
+        Product::create($request->all());
+
+        return redirect()->route('product.index')
+            ->with('success', 'product added successfully');
     }
 
     /**

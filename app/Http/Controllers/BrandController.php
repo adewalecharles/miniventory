@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
@@ -14,7 +15,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::where('company_id', Auth::user()->company->id)->get();
+        return view('brand.index', compact('brands'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
     /**
@@ -24,7 +27,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('brand.create');
     }
 
     /**
@@ -35,7 +38,15 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'company_id' => 'required',
+        ]);
+
+        Brand::create($request->all());
+
+        return redirect()->route('brand.index')
+            ->with('success', 'brand created successfully');
     }
 
     /**
@@ -46,7 +57,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        //
+        return view('brand.show', compact('product'));
     }
 
     /**
@@ -57,7 +68,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return view('brand.edit', compact('brand'));
     }
 
     /**
@@ -69,7 +80,15 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'company_id' => 'required',
+        ]);
+
+        $brand->update($request->all());
+
+        return redirect()->route('brand.index')
+            ->with('success', 'brand updated successfully');
     }
 
     /**
@@ -80,6 +99,9 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+
+        return redirect()->route('brand.index')
+            ->with('success', 'brand deleted successfully');
     }
 }
