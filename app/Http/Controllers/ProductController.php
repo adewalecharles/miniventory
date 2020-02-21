@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Brand;
 use App\Category;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,8 +18,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::where('company_id', Auth::user()->company->id)->get();
-        return view('product.index', compact('product'))
+        $products = Product::where('company_id', Auth::user()->company->id)->get();
+        return view('products.index', compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
@@ -31,7 +32,7 @@ class ProductController extends Controller
     {
         $brands = Brand::where('company_id',  Auth::user()->company->id)->get();
         $categories = Category::where('company_id',  Auth::user()->company->id)->get();
-        return view('product.create', compact('brands', 'categories'));
+        return view('products.create', compact('brands', 'categories'));
     }
 
     /**
@@ -43,7 +44,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'picture' => ['mimes: jpg, jpeg, png, svg, gif', 'max:1028'],
+            'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'required',
             'qty' => '',
             'purchased_date' => 'required',
@@ -54,17 +55,23 @@ class ProductController extends Controller
             'company_id' => 'required',
         ]);
 
+        $data = $request->all();
+        $data['purchased_date'] = Carbon::parse($data['purchased_date']);
+        $data['expiry_date'] = Carbon::parse($data['expiry_date']);
+
         if ($request->has('picture')) {
             $avataruploaded = request()->file('picture');
             $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
-            $avatarpath = public_path('/event/');
+            $avatarpath = public_path('/product/');
             $avataruploaded->move($avatarpath, $avatarname);
+
+            $data['picture'] = '/product/' . $avatarname;
         }
 
-        Product::create($request->all());
+        Product::create($data);
 
-        return redirect()->route('product.index')
-            ->with('success', 'product added successfully');
+        return redirect()->route('products.index')
+            ->with('success', 'Product added successfully');
     }
 
     /**
@@ -75,7 +82,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -86,7 +93,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $brands = Brand::where('company_id',  Auth::user()->company->id)->get();
+        $categories = Category::where('company_id',  Auth::user()->company->id)->get();
+        return view('products.edit', compact('brands', 'categories', 'product'));
     }
 
     /**
@@ -98,7 +107,25 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+
+        $data = $request->all();
+        $data['purchased_date'] = Carbon::parse($data['purchased_date']);
+        $data['expiry_date'] = Carbon::parse($data['expiry_date']);
+
+        if ($request->has('picture')) {
+            $avataruploaded = request()->file('picture');
+            $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
+            $avatarpath = public_path('/product/');
+            $avataruploaded->move($avatarpath, $avatarname);
+
+            $data['picture'] = '/product/' . $avatarname;
+        }
+
+        $product->update($data);
+
+
+        return redirect()->route('products.index')
+            ->with('success', 'Product added successfully');
     }
 
     /**

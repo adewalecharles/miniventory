@@ -27,6 +27,7 @@
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet"> 
     <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- lined-icons -->
     <link rel="stylesheet" href="{{asset('css/icon-font.min.css')}}" type='text/css' />
 </head>
@@ -38,7 +39,7 @@
                   <!--header start here-->
                      <div class="header-main">
                          <div class="logo-w3-agile">
-                                     <h1><a href="{{route('home')}}">{{Auth::user()->company->name ?? 'MiniVentory'}}</a></h1>
+                                     <h1 style="overflow:visible;"><a href="{{route('home')}}">{{\Illuminate\Support\Str::limit(Auth::user()->company->name, 7) }}</a></h1>
                                  </div>
 						<div class="profile_details w3l pull-right">		
 								<ul>
@@ -145,25 +146,10 @@
                                 <li><a href="{{route('home')}}"><i class="fa fa-tachometer"></i> <span>Dashboard</span><div class="clearfix"></div></a></li>
                                 
                                 
-                                 <li id="menu-academico" ><a href="{{route('category.index')}}"><span>Category</span><div class="clearfix"></div></a></li>
-                            <li id="menu-academico" ><a href="{{route('brand.index')}}"><span>Brand</span><div class="clearfix"></div></a></li>
-                             <li><a href="{{route('product.index')}}"> <span>Product</span><div class="clearfix"></div></a></li>
-                            <li><a href="maps.html"><span>Stock</span><div class="clearfix"></div></a></li>
-                            <li id="menu-academico" ><a href="#"><i class="fa fa-file-text-o"></i>  <span>Pages</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
-                                 <ul id="menu-academico-sub" >
-                                    <li id="menu-academico-boletim" ><a href="calendar.html">Calendar</a></li>
-                                    <li id="menu-academico-avaliacoes" ><a href="signin.html">Sign In</a></li>
-                                    <li id="menu-academico-avaliacoes" ><a href="signup.html">Sign Up</a></li>
-                                    
-
-                                  </ul>
-                             </li>
-                            <li><a href="#"><i class="fa fa-check-square-o nav_icon"></i><span>Forms</span> <span class="fa fa-angle-right" style="float: right"></span><div class="clearfix"></div></a>
-                              <ul>
-                                <li><a href="input.html"> Input</a></li>
-                                <li><a href="validation.html">Validation</a></li>
-                            </ul>
-                            </li>
+                                 <li id="menu-academico" ><i class="fa fa-list" aria-hidden="true"></i><a href="{{route('category.index')}}"><span>Category</span><div class="clearfix"></div></a></li>
+                            <li id="menu-academico"><i class="fa fa-user" aria-hidden="true"></i><a href="{{route('brand.index')}}"><span>Brand</span><div class="clearfix"></div></a></li>
+                             <li><i class="fa fa-box" aria-hidden="true"></i><a href="{{route('products.index')}}"> <span>Product</span><div class="clearfix"></div></a></li>
+                            <li><i class="fa fa-icon" aria-hidden="true"></i><a href="maps.html"><span>Stock</span><div class="clearfix"></div></a></li>
                           </ul>
                         </div>
                       </div>
@@ -213,47 +199,7 @@ jQuery(this).closest('.small-graph-box').fadeOut(200);
 return false;
 });
 
-// //CHARTS
-// function gd(year, day, month) {
-// return new Date(year, month - 1, day).getTime();
-// }
-
-// graphArea2 = Morris.Area({
-// element: 'hero-area',
-// padding: 10,
-// behaveLikeLine: true,
-// gridEnabled: false,
-// gridLineColor: '#dddddd',
-// axes: true,
-// resize: true,
-// smooth:true,
-// pointSize: 0,
-// lineWidth: 0,
-// fillOpacity:0.85,
-// data: [
-// {period: '2014 Q1', iphone: 2668, ipad: null, itouch: 2649},
-// {period: '2014 Q2', iphone: 15780, ipad: 13799, itouch: 12051},
-// {period: '2014 Q3', iphone: 12920, ipad: 10975, itouch: 9910},
-// {period: '2014 Q4', iphone: 8770, ipad: 6600, itouch: 6695},
-// {period: '2015 Q1', iphone: 10820, ipad: 10924, itouch: 12300},
-// {period: '2015 Q2', iphone: 9680, ipad: 9010, itouch: 7891},
-// {period: '2015 Q3', iphone: 4830, ipad: 3805, itouch: 1598},
-// {period: '2015 Q4', iphone: 15083, ipad: 8977, itouch: 5185},
-// {period: '2016 Q1', iphone: 10697, ipad: 4470, itouch: 2038},
-// {period: '2016 Q2', iphone: 8442, ipad: 5723, itouch: 1801}
-// ],
-// lineColors:['#ff4a43','#a2d200','#22beef'],
-// xkey: 'period',
-// redraw: true,
-// ykeys: ['iphone', 'ipad', 'itouch'],
-// labels: ['All Visitors', 'Returning Visitors', 'Unique Visitors'],
-// pointSize: 2,
-// hideHover: 'auto',
-// resize: true
-// });
-
-
-// });
+});
 </script>
 </body>
 </html>
