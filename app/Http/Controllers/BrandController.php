@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('subscribed');
+    }
     /**
      * Display a listing of the resource.
      *

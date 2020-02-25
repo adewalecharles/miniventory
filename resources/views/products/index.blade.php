@@ -24,13 +24,13 @@
                         @foreach($products as $product)
                         <tr>
                             <th scope="row">{{++$i}}</th>
-                            <td><img src="{{$product->picture}}" alt="product image" width="50px" height="50px"></td>
-                        <td>{{$product->name}}</td>
-                            <td>{{$product->purchased_date}}</td>
-                        <td>{{$product->expiry_date}}</td>
-                        <td>₦{{$product->amount}}</td>
-                        <td>{{$product->category->name}}</td>
-                        <td>{{$product->brand->name}}</td>  
+                            <td><img src="{{$product->picture ?? ''}}" alt="product image" width="50px" height="50px"></td>
+                        <td>{{$product->name ?? ''}}</td>
+                            <td>{{$product->purchased_date ?? ''}}</td>
+                        <td>{{$product->expiry_date ?? ''}}</td>
+                        <td>₦{{$product->amount ?? ''}}</td>
+                        <td>{{$product->category->name ?? ''}}</td>
+                        <td>{{$product->brand->name ?? ''}}</td>  
                         
                         <td>
                         <a href="{{route('products.edit', $product->id)}}"><button class="btn btn-secondary" type="submit">Edit</button></a>

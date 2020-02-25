@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,6 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -24,7 +27,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('company.create');
     }
 
     /**
@@ -35,7 +38,32 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required',
+            'tagline' => '',
+            'address' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'phone' => 'required|unique:companies',
+            'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'email' => 'required|unique:companies',
+            'user_id' => '',
+        ]);
+
+        $data = $request->all();
+        if ($request->has('picture')) {
+            $avataruploaded = request()->file('picture');
+            $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
+            $avatarpath = public_path('/company/');
+            $avataruploaded->move($avatarpath, $avatarname);
+
+            $data['picture'] = '/company/' . $avatarname;
+        }
+
+        Company::create($data);
+
+        return view('pay')->with('success', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
     }
 
     /**
@@ -46,7 +74,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return view('company.show', compact('company'));
     }
 
     /**

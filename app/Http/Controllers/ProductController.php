@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('subscribed');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -54,6 +60,8 @@ class ProductController extends Controller
             'brand_id' => '',
             'company_id' => 'required',
         ]);
+
+        $data = $request->all();
 
         $data = $request->all();
         $data['purchased_date'] = Carbon::parse($data['purchased_date']);

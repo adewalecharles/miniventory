@@ -30,6 +30,11 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- lined-icons -->
     <link rel="stylesheet" href="{{asset('css/icon-font.min.css')}}" type='text/css' />
+    <script>
+      $( function() {
+        $( "#datepicker" ).datepicker();
+      } );
+      </script>
 </head>
 <body>
     <div class="page-container">
@@ -176,8 +181,16 @@
                             });
                       </script>
 <!--js -->
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
 <script src="{{asset('js/jquery-2.1.4.min.js')}}"></script>
-<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script src="{{asset('js/jquery.nicescroll.js')}}"></script>
 <script src="{{asset('js/scripts.js')}}"></script>
 <!-- Bootstrap Core JavaScript -->
