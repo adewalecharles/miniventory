@@ -69,51 +69,87 @@
                     <tr>
                         <th>S.NO</th>
                         <th>PRODUCT</th>
-                        <th>STATUS</th>
-                        <th>PROGRESS</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($products as $product)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Lorem ipsum</td>
-                        <td><span class="label label-success">In progress</span></td>
-                        <td><h5>85% <i class="fa fa-level-up"></i></h5></td>
+                        <th scope="row">{{++$i}}</th>
+                        <td>{{$product->name}}</td>
+
+                        <td>{{$product->qty}}</td>
+                        
+                        @if ($product->qty > 5)
+                        <td><span class="label label-success">In Stock</span></td>
+
+                        @elseif ($product->qty < 5)
+                        <td><span class="label label-warning">Low</span></td>
+                       
+                        @elseif ($product->qty <= 1)
+                        <td><span class="label label-danger">Out of Stock</span></td> 
+                        @endif
+
+                        
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Aliquam</td>
-                        <td><span class="label label-warning">New</span></td>
-                        <td><h5>35% <i class="fa fa-level-up"></i></h5></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Lorem ipsum</td>
-                        <td><span class="label label-danger">Overdue</span></td>
-                        <td><h5 class="down">40% <i class="fa fa-level-down"></i></h5></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>Aliquam</td>
-                        <td><span class="label label-info">Out of stock</span></td>
-                        <td><h5>100% <i class="fa fa-level-up"></i></h5></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>Lorem ipsum</td>
-                        <td><span class="label label-success">In progress</span></td>
-                        <td><h5 class="down">10% <i class="fa fa-level-down"></i></h5></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td>Aliquam</td>
-                        <td><span class="label label-warning">New</span></td>
-                        <td><h5>38% <i class="fa fa-level-up"></i></h5></td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+                {{ $products->links() }}
+            </div>
+            
         </div>
 </div>
+
 <div class="clearfix"></div>
-</div>
+
+
+<div class="alert alert-danger mt-4" role="alert">
+    These are products that will expire in less than a year!
+  </div>
+<div class="col-md-12 agile-info-stat">
+    <div class="stats-info stats-last widget-shadow">
+                <table class="table stats-table ">
+                    <thead>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>PRODUCT</th>
+                            <th>STATUS</th>
+                            <th>Quantity</th>
+                            <th>EXPIRATION DATE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($expiredproducts as $expiredproduct)
+                        <tr>
+                            <th scope="row">{{++$i}}</th>
+                            <td>{{$expiredproduct->name}}</td>
+                            
+                            @if ($expiredproduct->qty > 5)
+                            <td><span class="label label-success">In Stock</span></td>
+    
+                            @elseif ($expiredproduct->qty < 5)
+                            <td><span class="label label-warning">Low</span></td>
+                           
+                            @elseif ($expiredproduct->qty <= 1)
+                            <td><span class="label label-danger">Out of Stock</span></td> 
+                            @endif
+    
+                            <td>{{$expiredproduct->qty}}</td>
+
+                            <td>{{$expiredproduct->expiry_date}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                    {{ $expiredproducts->links() }}
+                </div>
+                
+            </div>
+    </div>
+<div class="clearfix"></div>
+
 @endsection

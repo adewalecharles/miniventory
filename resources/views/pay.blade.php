@@ -23,7 +23,7 @@
                 </div>
             </p>
             <input type="hidden" name="email" value="{{Auth::user()->email}}">
-            <input type="hidden" name="orderID" value=""">
+            <input type="hidden" name="orderID" value="">
             <input type="hidden" name="amount" value="400000">
             <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> 

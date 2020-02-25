@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Paystack;
+use Unicodeveloper\Paystack\Paystack as PaystackPaystack;
 
 class PaymentController extends Controller
 {
@@ -21,7 +22,7 @@ class PaymentController extends Controller
      */
     public function redirectToGateway()
     {
-        return Paystack::getAuthorizationUrl()->redirectNow();
+        return PaystackPaystack::getAuthorizationUrl()->redirectNow();
     }
 
     /**
@@ -30,7 +31,7 @@ class PaymentController extends Controller
      */
     public function handleGatewayCallback()
     {
-        $paymentDetails = Paystack::getPaymentData();
+        $paymentDetails = PaystackPaystack::getPaymentData();
 
         dd($paymentDetails);
         // Now you have the payment details,

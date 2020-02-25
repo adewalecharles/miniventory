@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Category;
+use App\Mail\NewProduct;
+use App\Mail\UpdateProduct;
 use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
@@ -24,7 +27,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('company_id', Auth::user()->company->id)->get();
+        $products = Product::where('company_id', Auth::user()->company->id)->simplePaginate(15);
         return view('products.index', compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);;
     }
@@ -61,6 +64,7 @@ class ProductController extends Controller
             'company_id' => 'required',
         ]);
 
+
         $data = $request->all();
 
         $data = $request->all();
@@ -76,7 +80,11 @@ class ProductController extends Controller
             $data['picture'] = '/product/' . $avatarname;
         }
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        $company = Auth::user()->company;
+
+        Mail::to($company)->send(new NewProduct($company, $product));
 
         return redirect()->route('products.index')
             ->with('success', 'Product added successfully');
@@ -115,6 +123,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $company = Auth::user()->company;
 
         $data = $request->all();
         $data['purchased_date'] = Carbon::parse($data['purchased_date']);
@@ -131,9 +140,10 @@ class ProductController extends Controller
 
         $product->update($data);
 
+        Mail::to($company)->send(new UpdateProduct($company, $product));
 
         return redirect()->route('products.index')
-            ->with('success', 'Product added successfully');
+            ->with('success', 'Product updated successfully');
     }
 
     /**
@@ -144,6 +154,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->back()->with('warning', 'product deleted');
     }
 }

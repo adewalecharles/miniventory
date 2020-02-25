@@ -1,9 +1,4 @@
 @extends('layouts.dashboard')
-
-    <script>
-        // Data Picker Initialization
-$('.datepicker').pickadate();
-  </script>
 @section('content')
 
 <div class="grid-form1">
@@ -31,7 +26,7 @@ $('.datepicker').pickadate();
                        <div class="form-group">
                            <label for="purchased_date" class="col-sm-2 control-label">Purchased Date</label>
                            <div class="col-sm-8">
-                           <input type="text" class="form-control1 datepicker" id="datepicker" name="purchased_date" autocomplete="{{old('purchased_date')}}" required>
+                           <input type="text" class="form-control1 " id="purchased_date" name="purchased_date" autocomplete="{{old('purchased_date')}}" required>
                            </div>
                        </div>
 
@@ -45,7 +40,7 @@ $('.datepicker').pickadate();
                        <div class="form-group">
                         <label for="expiry_date" class="col-sm-2 control-label">Expiry Date</label>
                         <div class="col-sm-8">
-                        <input type="datetime" class="form-control1 datepicker" id="date-picker-example" name="expiry_date" autocomplete="{{old('expiry_date')}}">
+                        <input type="datetime" class="form-control1 " id="expiry_date" name="expiry_date" autocomplete="{{old('expiry_date')}}">
 
                         </div>
                     </div>
@@ -82,7 +77,7 @@ $('.datepicker').pickadate();
                     </div>
                        
                     <div class="mt-4">
-                        <button class="btn btn-primary" type="submit"> Add Product</button>
+                        <button class="btn btn-success" type="submit"> Add Product</button>
                     </div>
                     
                    </form>
