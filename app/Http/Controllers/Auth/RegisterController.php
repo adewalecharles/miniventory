@@ -33,8 +33,10 @@ class RegisterController extends Controller
     {
         if (auth()->user()->admin == 1) {
             return '/admin/dashboard';
-        } else if (!auth()->user()->admin == 1 && auth()->user()->company == '') {
-            return '/company/create';
+        } else if (!auth()->user()->admin && !auth()->user()->company()->exists()) {
+            return  '/company/create';
+        } else if (auth()->user()->company()->exists() && auth()->user()->subscribed == 0) {
+            return 'payment/pay';
         } else {
             return 'home';
         }

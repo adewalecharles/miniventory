@@ -55,15 +55,15 @@ class CompanyController extends Controller
         if ($request->has('picture')) {
             $avataruploaded = request()->file('picture');
             $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
-            $avatarpath = public_path('/company/');
+            $avatarpath = public_path('/companies/');
             $avataruploaded->move($avatarpath, $avatarname);
 
-            $data['picture'] = '/company/' . $avatarname;
+            $data['picture'] = '/companies/' . $avatarname;
         }
 
         Company::create($data);
 
-        return view('pay')->with('success', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
+        return view('payment.pay')->with('success', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
     }
 
     /**

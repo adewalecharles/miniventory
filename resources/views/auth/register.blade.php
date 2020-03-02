@@ -14,7 +14,7 @@
 			</div>
 			<div class="username">
 				<span class="username">Email:</span>
-				<input type="text" name="email" class="name @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email">
+				<input type="email" name="email" class="name @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email">
 				<div class="clearfix"></div>
 			</div>
 			<div class="password-agileits">

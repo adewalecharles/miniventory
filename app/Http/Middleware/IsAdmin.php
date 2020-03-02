@@ -17,7 +17,7 @@ class IsAdmin
     public function handle($request, Closure $next)
     {
         if (Auth::user() &&  Auth::user()->admin == 1) {
-            return view('admin');
+            return redirect()->route('admin.index');
         }
 
         return $next($request);

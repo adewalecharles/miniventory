@@ -17,7 +17,7 @@ class IsSubscribe
     public function handle($request, Closure $next)
     {
         if (Auth::user() &&  Auth::user()->subscribed == 1) {
-            return redirect('pay');
+            return redirect()->route('pay');
         }
         return $next($request);
     }

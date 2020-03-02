@@ -20,9 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::post('pay', 'PaymentController@redirectToGateway')->name('pay');
-Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
-
 Route::group(['middleware' => 'admin'], function () {
     Route::resource('admin', 'AdminController');
 });
@@ -32,3 +29,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('brand', 'BrandController');
 Route::resource('products', 'ProductController');
 Route::resource('category', 'CategoryController');
+Route::resource('company', 'CompanyController');
+Route::resource('checkout', 'CheckoutController');
+
+Route::get('payment/pay', 'PaymentController@index')->name('payment-process');
+Route::post('payment/pay', 'PaymentController@redirectToGateway')->name('pay');
+Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');

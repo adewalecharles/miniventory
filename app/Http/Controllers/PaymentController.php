@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Paystack;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Paystack;
-use Unicodeveloper\Paystack\Paystack as PaystackPaystack;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -20,9 +20,15 @@ class PaymentController extends Controller
      * Redirect the User to Paystack Payment Page
      * @return Url
      */
+
+    public function index()
+    {
+        return view('payment.pay');
+    }
+
     public function redirectToGateway()
     {
-        return PaystackPaystack::getAuthorizationUrl()->redirectNow();
+        return Paystack::getAuthorizationUrl()->redirectNow();
     }
 
     /**
@@ -31,9 +37,13 @@ class PaymentController extends Controller
      */
     public function handleGatewayCallback()
     {
-        $paymentDetails = PaystackPaystack::getPaymentData();
+        $paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);
+        $user = Auth::user()->id;
+        DB::update('update users set subscribed = 1 where id = ' . $user . '');
+        return view('home')->with('success', 'welcome,{{Auth::user()->comapny->name}} you have completed your registration!, we are happy to have you onboard, feel free to contact us at info@miniventory.com if you have any issues');
+
+        // dd($paymentDetails);
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
         // you can then redirect or do whatever you want

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -30,10 +31,12 @@ class LoginController extends Controller
     {
         if (auth()->user()->admin == 1) {
             return '/admin/dashboard';
-        } else if (!auth()->user()->admin == 1 && auth()->user()->company == '') {
-            return '/company/create';
+        } else if (!auth()->user()->admin && !auth()->user()->company()->exists()) {
+            return  '/company/create';
+        } else if (auth()->user()->company()->exists() && auth()->user()->subscribed == 0) {
+            return '/payment/pay';
         } else {
-            return 'home';
+            return '/home';
         }
     }
 

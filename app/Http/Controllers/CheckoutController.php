@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Checkout;
+use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
@@ -14,7 +16,8 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        //
+        $checkouts = Checkout::where('company_id', Auth::user()->company->id)->simplePaginate(5);
+        return view('checkout.index', compact('checkouts'));
     }
 
     /**
@@ -24,7 +27,8 @@ class CheckoutController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::where('company_id', Auth::user()->company->id)->get();
+        return view('checkout.create', compact('products'));
     }
 
     /**
@@ -35,7 +39,20 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_id' => 'required',
+            'customer_name' => 'required',
+            'customer_phone' => 'required',
+            'customer_address' => '',
+            'qty' => 'required',
+        ]);
+
+
+        $data = $request->all();
+
+        Checkout::create($data);
+
+        return redirect()->back()->with('success', 'Product checked out successfully');
     }
 
     /**
@@ -46,7 +63,7 @@ class CheckoutController extends Controller
      */
     public function show(Checkout $checkout)
     {
-        //
+        return view('checkout.show', compact('checkout'));
     }
 
     /**
@@ -57,7 +74,8 @@ class CheckoutController extends Controller
      */
     public function edit(Checkout $checkout)
     {
-        //
+        $products = Product::where('company_id', Auth::user()->company->id)->get();
+        return view('checkout.edit', compact('products'));
     }
 
     /**
@@ -69,7 +87,10 @@ class CheckoutController extends Controller
      */
     public function update(Request $request, Checkout $checkout)
     {
-        //
+        $data = $request->all();
+        $checkout->update($data);
+
+        return view('checkout.index')->with('success', 'Checked out product editted successfully');
     }
 
     /**
@@ -80,6 +101,7 @@ class CheckoutController extends Controller
      */
     public function destroy(Checkout $checkout)
     {
-        //
+        $checkout->delete();
+        return view('checkout.index')->with('warning', 'Checked out product deleted succeesfully');
     }
 }

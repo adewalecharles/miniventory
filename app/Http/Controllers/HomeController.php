@@ -29,14 +29,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $date = new Carbon();
+        if (auth()->user()->admin == 1) {
+            return redirect()->route('admin.index')->with('success', 'Welcome admin!');
+        } else if (!auth()->user()->admin && !auth()->user()->company()->exists()) {
+            return  redirect()->route('company.create')->with('warning', 'OOps!, seems you have not created a compnay yet!, kindly fill the form below');
+        } else if (auth()->user()->company()->exists() && auth()->user()->subscribed == 0) {
+            return redirect()->route('payment-process')->with('warning', 'seems you have no active subscription, please subscribe to complete Your registration');
+        } else if (auth()->user()->company()->exists() && auth()->user()->subscribed == 1) {
+            $date = new Carbon();
 
-        $expiredproducts = Product::where('expiry_date', '<=', $date->addMonth(12))
-            ->where('company_id', Auth::user()->company->id)->simplePaginate(5);
+            $expiredproducts = Product::where('expiry_date', '<=', $date->addMonth(12))
+                ->where('company_id', Auth::user()->company->id)->simplePaginate(5);
 
-        $products = Product::where('company_id',  Auth::user()->company->id)->simplePaginate(5);
+            $products = Product::where('company_id',  Auth::user()->company->id)->simplePaginate(5);
 
-        return view('home', compact('products', 'expiredproducts'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);;;
+            return view('home', compact('products', 'expiredproducts'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);;;
+        }
     }
 }

@@ -77,9 +77,9 @@
                     @foreach($products as $product)
                     <tr>
                         <th scope="row">{{++$i}}</th>
-                        <td>{{$product->name}}</td>
+                        <td>{{$product->name ?? ''}}</td>
 
-                        <td>{{$product->qty}}</td>
+                        <td>{{$product->qty ?? ''}}</td>
                         
                         @if ($product->qty > 5)
                         <td><span class="label label-success">In Stock</span></td>
@@ -125,7 +125,7 @@
                         @foreach($expiredproducts as $expiredproduct)
                         <tr>
                             <th scope="row">{{++$i}}</th>
-                            <td>{{$expiredproduct->name}}</td>
+                            <td>{{$expiredproduct->name ?? ''}}</td>
                             
                             @if ($expiredproduct->qty > 5)
                             <td><span class="label label-success">In Stock</span></td>
@@ -137,9 +137,9 @@
                             <td><span class="label label-danger">Out of Stock</span></td> 
                             @endif
     
-                            <td>{{$expiredproduct->qty}}</td>
+                            <td>{{$expiredproduct->qty ?? ''}}</td>
 
-                            <td>{{$expiredproduct->expiry_date}}</td>
+                            <td>{{$expiredproduct->expiry_date ?? ''}}</td>
                         </tr>
                         @endforeach
                     </tbody>
