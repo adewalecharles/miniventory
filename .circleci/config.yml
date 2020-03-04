@@ -8,15 +8,11 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.1-node-browsers
-      machine:
-  pre:
-    - sudo apt-get update; USE_PRECOMPILE=true sudo -E circleci-install php 7.1.0
-  php:
+      php:
     version: 7.1.0
-
-test:
-  override:
-    - php --version
+     
+   
+ 
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -32,6 +28,7 @@ test:
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
+      -run:  - sudo apt-get update; USE_PRECOMPILE=true sudo -E circleci-install php 7.1.0
 
       # Download and cache dependencies
       - restore_cache:
