@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class IsAdmin
 {
@@ -16,10 +15,9 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->admin == 1) {
-            return redirect()->route('admin.index');
+        if (auth()->check() && auth()->user()->admin == 0) {
+            return $next($request);
         }
-
-        return $next($request);
+        return redirect()->route('admin.index');
     }
 }

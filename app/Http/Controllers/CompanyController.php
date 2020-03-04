@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Mail\NewUserMail;
+use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
@@ -38,7 +43,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-
+        $user = Auth::user();
         $request->validate([
             'name' => 'required',
             'tagline' => '',
@@ -62,6 +67,20 @@ class CompanyController extends Controller
         }
 
         Company::create($data);
+
+        Mail::to($user)->send(new NewUserMail($user));
+
+        if (Auth::user()->subscribed == 1) {
+            $date = new Carbon();
+
+            $expiredproducts = Product::where('expiry_date', '<=', $date->addMonth(12))
+                ->where('company_id', Auth::user()->company->id)->simplePaginate(5);
+
+            $products = Product::where('company_id',  Auth::user()->company->id)->simplePaginate(5);
+
+            return view('home', compact('products', 'expiredproducts'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);;;
+        }
 
         return view('payment.pay')->with('success', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
     }

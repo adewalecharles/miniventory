@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use Paystack;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Mail\payment;
+use App\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -40,8 +44,12 @@ class PaymentController extends Controller
         $paymentDetails = Paystack::getPaymentData();
 
         $user = Auth::user()->id;
+        $usermail =  Auth::user();
         DB::update('update users set subscribed = 1 where id = ' . $user . '');
-        return view('home')->with('success', 'welcome,{{Auth::user()->comapny->name}} you have completed your registration!, we are happy to have you onboard, feel free to contact us at info@miniventory.com if you have any issues');
+
+        // Mail::to($usermail)->send(new payment($usermail, $paymentDetails));
+
+        return redirect()->route('home')->with('success', 'You have completed your registration!, we are happy to have you onboard, feel free to contact us at info@miniventory.com if you have any issues');
 
         // dd($paymentDetails);
         // Now you have the payment details,

@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class IsSubscribe
 {
@@ -16,9 +15,9 @@ class IsSubscribe
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->subscribed == 1) {
-            return redirect()->route('pay');
+        if (auth()->check() && auth()->user()->subscribed == 1) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect()->route('pay');
     }
 }

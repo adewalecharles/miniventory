@@ -20,9 +20,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'admin'], function () {
-    Route::resource('admin', 'AdminController');
-});
+
+Route::resource('admin', 'AdminController');
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');

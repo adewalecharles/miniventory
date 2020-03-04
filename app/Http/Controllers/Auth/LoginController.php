@@ -29,17 +29,12 @@ class LoginController extends Controller
      */
     public function redirectTo()
     {
-        if (auth()->user()->admin == 1) {
-            return '/admin/dashboard';
-        } else if (!auth()->user()->admin && !auth()->user()->company()->exists()) {
-            return  '/company/create';
-        } else if (auth()->user()->company()->exists() && auth()->user()->subscribed == 0) {
-            return '/payment/pay';
-        } else {
-            return '/home';
-        }
-    }
 
+        if (auth()->check() && auth()->user()->admin == 1) {
+            return 'admin.index';
+        }
+        return 'home';
+    }
     /**
      * Create a new controller instance.
      *

@@ -93,7 +93,7 @@
                         <div class="method visa"></div>
                         <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" role="form">
                           @csrf
-                        <input type="hidden" name="email" value="{{Auth::user()->company->email}}"> {{-- required --}}
+                        <input type="hidden" name="email" value="{{Auth::user()->email}}"> {{-- required --}}
                         <input type="hidden" name="orderID" value="">
                         <input type="hidden" name="amount" value="400000"> {{-- required in kobo --}}
                         <input type="hidden" name="quantity" value="1">
@@ -107,7 +107,7 @@
                         <div class="method master-card"></div>
                         <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" role="form">
                           @csrf
-                          <input type="hidden" name="email" value="{{Auth::user()->company->email}}"> {{-- required --}}
+                          <input type="hidden" name="email" value="{{Auth::user()->email}}"> {{-- required --}}
                           <input type="hidden" name="orderID" value="">
                           <input type="hidden" name="amount" value="400000"> {{-- required in kobo --}}
                           <input type="hidden" name="quantity" value="1">
@@ -120,7 +120,7 @@
                         <div class="method amex"></div>
                         <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" role="form">
                           @csrf
-                          <input type="hidden" name="email" value="{{Auth::user()->company->email}}"> {{-- required --}}
+                          <input type="hidden" name="email" value="{{Auth::user()->email}}"> {{-- required --}}
                           <input type="hidden" name="orderID" value="">
                           <input type="hidden" name="amount" value="400000"> {{-- required in kobo --}}
                           <input type="hidden" name="quantity" value="1">
@@ -133,7 +133,7 @@
                          <div class="method vishwa"></div>
                          <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" role="form">
                           @csrf
-                          <input type="hidden" name="email" value="{{Auth::user()->company->email}}"> {{-- required --}}
+                          <input type="hidden" name="email" value="{{Auth::user()->email}}"> {{-- required --}}
                           <input type="hidden" name="orderID" value="">
                           <input type="hidden" name="amount" value="400000"> {{-- required in kobo --}}
                           <input type="hidden" name="quantity" value="1">
