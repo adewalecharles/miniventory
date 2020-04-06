@@ -15,6 +15,12 @@ class CreateCheckoutsTable extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('product_id')->unsigned()->references('id')->on('products');
+            $table->string('customer_name');
+            $table->string('cutomer_phone');
+            $table->string('customer_address');
+            $table->string('qty');
+            $table->integer('company_id')->unsigned()->references('id')->on('companies');
             $table->timestamps();
         });
     }

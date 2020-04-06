@@ -30,16 +30,17 @@ class HomeController extends Controller
     public function index()
     {
 
-        $company = Auth::user()->company == null;
-        if ($company) {
-            return redirect()->route('company.create');
-        }
-
         $admin = Auth::user()->admin;
 
         if ($admin == 1) {
             return redirect()->route('admin.index');
         }
+
+        $company = Auth::user()->company == null;
+        if ($company) {
+            return redirect()->route('company.create');
+        }
+
         $date = new Carbon();
 
         $expiredproducts = Product::where('expiry_date', '<=', $date->addMonth(12))

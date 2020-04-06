@@ -148,7 +148,7 @@
                                  <li id="menu-academico" ><i class="fa fa-list" aria-hidden="true"></i><a href="{{route('category.index')}}"><span>Category</span><div class="clearfix"></div></a></li>
                             <li id="menu-academico"><i class="fa fa-user" aria-hidden="true"></i><a href="{{route('brand.index')}}"><span>Brand</span><div class="clearfix"></div></a></li>
                              <li><i class="fa fa-box" aria-hidden="true"></i><a href="{{route('products.index')}}"> <span>Product</span><div class="clearfix"></div></a></li>
-                            <li><i class="fa fa-icon" aria-hidden="true"></i><a href="maps.html"><span>Stock</span><div class="clearfix"></div></a></li>
+                            <li><i class="fa fa-icon" aria-hidden="true"></i><a href="{{route('checkout.index')}}"><span>Checkout</span><div class="clearfix"></div></a></li>
                           </ul>
                         </div>
                       </div>
@@ -200,5 +200,6 @@ return false;
 
 });
 </script>
+@yield('extra-js')
 </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,6 +12,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('admin');
     }
 
     /**
@@ -20,6 +22,16 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $subscribeUsers = User::where('subscribed', '=', 1)
+            ->where(auth()->user()->company != null)
+            ->get()
+            ->simplePaginate(10);
+
+        $unsubscribeUsers = User::where('subscribed', '=', 0)
+            ->where(auth()->user()->company == null)
+            ->get()
+            ->simplePaginate(10);
+
         return view('admin.index');
     }
 

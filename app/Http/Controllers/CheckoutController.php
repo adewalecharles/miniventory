@@ -16,8 +16,9 @@ class CheckoutController extends Controller
      */
     public function index()
     {
+        $products = Product::where('company_id', Auth::user()->company->id)->get();
         $checkouts = Checkout::where('company_id', Auth::user()->company->id)->simplePaginate(5);
-        return view('checkout.index', compact('checkouts'));
+        return view('checkout.index', compact('checkouts', 'products'));
     }
 
     /**
@@ -28,7 +29,7 @@ class CheckoutController extends Controller
     public function create()
     {
         $products = Product::where('company_id', Auth::user()->company->id)->get();
-        return view('checkout.create', compact('products'));
+        return view('checkout.index', compact('products'));
     }
 
     /**
@@ -40,19 +41,31 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_id' => 'required',
+            'products' => 'required|array',
             'customer_name' => 'required',
             'customer_phone' => 'required',
             'customer_address' => '',
-            'qty' => 'required',
+            'company_id' => ''
         ]);
 
 
         $data = $request->all();
 
-        Checkout::create($data);
+        $product = Product::where('id', $data['product_id'])->get();
 
-        return redirect()->back()->with('success', 'Product checked out successfully');
+        $quantity = $data['qty'];
+
+        $data['company_id'] = Auth::user()->company->id;
+
+        foreach ($data as  $checkout) {
+
+            if ($quantity <= $product->qty) {
+                Checkout::create($checkout);
+
+                return redirect()->back()->with('success', 'Product checked out successfully');
+            }
+            return redirect()->back()->with('warning', 'Product could not be checked out as the you do not have enough stock');
+        }
     }
 
     /**
@@ -104,4 +117,14 @@ class CheckoutController extends Controller
         $checkout->delete();
         return view('checkout.index')->with('warning', 'Checked out product deleted succeesfully');
     }
+
+    // public function invoice()
+    // {
+    //     $checkouts = Checkout::where('company_id', Auth::user()->company->id);
+    //     return view('checkout.invoice', compact('checkouts'));
+
+    //     if (isset($_POST['print'])) {
+    //         # code...
+    //     }
+    // }
 }
