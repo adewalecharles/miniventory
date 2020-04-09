@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -57,13 +58,13 @@ class CompanyController extends Controller
         ]);
 
         $data = $request->all();
-        if ($request->has('picture')) {
-            $avataruploaded = request()->file('picture');
-            $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
-            $avatarpath = public_path('/companies/');
-            $avataruploaded->move($avatarpath, $avatarname);
+        if ($request->hasfile('picture')) {
+            $file = $request->file('picture');
+            $name = time() . $file->getClientOriginalName();
+            $filePath = 'images/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            $data['picture'] = '/companies/' . $avatarname;
+            $data['picture'] = $filePath;
         }
 
         Company::create($data);

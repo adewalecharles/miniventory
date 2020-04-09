@@ -56,7 +56,7 @@
           @if ($errors->any())
           <div class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Whoops!</strong> {{session('warning')}}<br><br>
+            <strong>Whoops!</strong> {{session('danger')}}<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>

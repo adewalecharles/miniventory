@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <title>{{ config('app.name', 'MiniVentory') }}</title> --}}
-    <title>{{Auth::user()->company->name ?? 'MiniVentory'}}</title>
+<title>{{Auth::user()->company->name ?? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -93,7 +93,7 @@
             @if ($errors->any())
             <div class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Whoops!</strong> {{session('warning')}}<br><br>
+            <strong>Whoops!</strong> {{session('danger')}}<br><br>
             <ul>
               @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -128,7 +128,7 @@
     <!--inner block end here-->
     <!--copy rights start here-->
     <div class="copyrights">
-         <p>© 2020 MiniVentory. All Rights Reserved | Design and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
+         <p>© 2020 MiniVentory. All Rights Reserved | Designed and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
     </div>	
     <!--COPY rights end here-->
     </div>

@@ -42,7 +42,7 @@
 						<a href="index.html">Back to home</a>
 				</div>
 				<div class="footer">
-					<p>© 2020 MiniVentory. All Rights Reserved | Design and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
+					<p>© 2020 MiniVentory. All Rights Reserved | Designed and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
 				</div>
 				
 					
@@ -50,6 +50,6 @@
 	</div>
     </div>
     
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="{{asset('js/jquery-2.1.4.min.js')}}"></script>
 </body>
 </html>

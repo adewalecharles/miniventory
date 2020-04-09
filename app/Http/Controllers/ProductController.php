@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -71,14 +72,15 @@ class ProductController extends Controller
         $data['purchased_date'] = Carbon::parse($data['purchased_date']);
         $data['expiry_date'] = Carbon::parse($data['expiry_date']);
 
-        if ($request->has('picture')) {
-            $avataruploaded = request()->file('picture');
-            $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
-            $avatarpath = public_path('/product/');
-            $avataruploaded->move($avatarpath, $avatarname);
+        if ($request->hasfile('picture')) {
+            $file = $request->file('picture');
+            $name = time() . $file->getClientOriginalName();
+            $filePath = 'images/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            $data['picture'] = '/product/' . $avatarname;
+            $data['picture'] = $filePath;
         }
+
 
         $product = Product::create($data);
 
@@ -129,14 +131,15 @@ class ProductController extends Controller
         $data['purchased_date'] = Carbon::parse($data['purchased_date']);
         $data['expiry_date'] = Carbon::parse($data['expiry_date']);
 
-        if ($request->has('picture')) {
-            $avataruploaded = request()->file('picture');
-            $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
-            $avatarpath = public_path('/product/');
-            $avataruploaded->move($avatarpath, $avatarname);
+        if ($request->hasfile('picture')) {
+            $file = $request->file('picture');
+            $name = time() . $file->getClientOriginalName();
+            $filePath = 'images/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            $data['picture'] = '/product/' . $avatarname;
+            $data['picture'] = $filePath;
         }
+
 
         $product->update($data);
 
