@@ -61,7 +61,7 @@ class CompanyController extends Controller
         if ($request->hasfile('picture')) {
             $file = $request->file('picture');
             $name = time() . $file->getClientOriginalName();
-            $filePath = 'images/' . $name;
+            $filePath = 'company-logo/' . $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
             $data['picture'] = $filePath;
