@@ -2,7 +2,10 @@
 # Hello from MiniVentory
 
 Hey {{ $user->company->name }},
-You have registered your company on our Inventory app, kindly make a payment of #4000 or $10 to complete your registration.
+
+You have registered your company on our Inventory app.
+
+Belo are your registration details: 
 
 # Details
 Name: {{ $user->company->name}}<br>
