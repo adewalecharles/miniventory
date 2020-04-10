@@ -75,7 +75,7 @@ class ProductController extends Controller
         if ($request->hasfile('picture')) {
             $file = $request->file('picture');
             $name = time() . $file->getClientOriginalName();
-            $filePath = 'product-images/' . $name;
+            $filePath = 'images/' . $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
             $data['picture'] = $filePath;
@@ -134,7 +134,7 @@ class ProductController extends Controller
         if ($request->hasfile('picture')) {
             $file = $request->file('picture');
             $name = time() . $file->getClientOriginalName();
-            $filePath = 'product-images/' . $name;
+            $filePath = 'images/' . $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
             $data['picture'] = $filePath;

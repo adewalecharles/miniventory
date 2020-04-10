@@ -61,7 +61,7 @@ class CompanyController extends Controller
         if ($request->hasfile('picture')) {
             $file = $request->file('picture');
             $name = time() . $file->getClientOriginalName();
-            $filePath = 'company-logo/' . $name;
+            $filePath = 'images/' . $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
             $data['picture'] = $filePath;
@@ -80,10 +80,11 @@ class CompanyController extends Controller
             $products = Product::where('company_id',  Auth::user()->company->id)->simplePaginate(5);
 
             return view('home', compact('products', 'expiredproducts'))
-                ->with('i', (request()->input('page', 1) - 1) * 5);;;
+                ->with('i', (request()->input('page', 1) - 1) * 5)
+                ->with('success', 'You have completed your registration!, we are happy to have you onboard, feel free to contact us at info@miniventory.com if you have any issues');;;;
         }
 
-        return view('payment.pay')->with('success', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
+        return view('payment.pay')->with('warning', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
     }
 
     /**
