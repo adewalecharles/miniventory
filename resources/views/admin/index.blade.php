@@ -80,7 +80,7 @@
                     @if($user->subscribed == 0)
                     <tr>
                         <th scope="row">{{++$i}}</th>
-                        <td>{{$user->name ?? ''}}</td>
+                        <td>{{$user->username ?? ''}}</td>
 
                         <td>{{$user->email ?? ''}}</td>
                          <td>{{$user->created_at ?? ''}}</td>
