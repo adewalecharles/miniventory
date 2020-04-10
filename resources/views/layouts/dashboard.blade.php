@@ -11,6 +11,7 @@
     {{-- <title>{{ config('app.name', 'MiniVentory') }}</title> --}}
 <title>{{Auth::user()->company->name ?? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
 
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
