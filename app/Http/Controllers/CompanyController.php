@@ -68,7 +68,7 @@ class CompanyController extends Controller
 
         Company::create($data);
 
-        Mail::to($user)->send(new NewUserMail($user));
+         Mail::to($user)->send(new NewUserMail($user));
 
         if (Auth::user()->subscribed == 1) {
             $date = new Carbon();
