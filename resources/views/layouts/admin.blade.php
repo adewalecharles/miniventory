@@ -20,6 +20,7 @@
     <link href="css/app.css" rel="stylesheet">
 
     <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
     <!-- Custom CSS -->
     <link href="css/style.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="css/morris.css" type="text/css"/>

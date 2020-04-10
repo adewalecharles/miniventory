@@ -8,7 +8,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- <title>{{ config('app.name', 'MiniVentory') }}</title> --}}
 <title>{{Auth::user()->company->name ?? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
 
 
@@ -18,6 +17,7 @@
 
     <!-- Styles -->
     <link href="css/app.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
 
     <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->
