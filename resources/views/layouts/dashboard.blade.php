@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <title>{{ config('app.name', 'MiniVentory') }}</title> --}}
-<title>{{Auth::user()->company->name ?? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
+<title>{{Auth::user()->company->name ?eb? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
 
 
     <!-- Fonts -->
