@@ -39,7 +39,7 @@
                   <!--header start here-->
                      <div class="header-main">
                          <div class="logo-w3-agile">
-                                     <h1 style="overflow:visible;"><a href="{{route('home')}}">{{\Illuminate\Support\Str::limit(Auth::user()->company->name, 7) }}</a></h1>
+                                     <h1 style="overflow:visible;"><a href="{{route('home')}}">E-vent..</a></h1>
                                  </div>
 						<div class="profile_details w3l pull-right">		
 								<ul>
