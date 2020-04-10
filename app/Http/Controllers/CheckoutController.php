@@ -41,30 +41,25 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'products' => 'required|array',
+            'cart' => 'required|array',
             'customer_name' => 'required',
             'customer_phone' => 'required',
-            'customer_address' => '',
-            'company_id' => ''
+            'customer_address' => 'required',
         ]);
 
 
         $data = $request->all();
 
-        $product = Product::where('id', $data['product_id'])->get();
-
-        $quantity = $data['qty'];
-
         $data['company_id'] = Auth::user()->company->id;
 
-        foreach ($data as  $checkout) {
+        foreach ($data['cart'] as  $item) {
 
-            if ($quantity <= $product->qty) {
-                Checkout::create($checkout);
+            // if ($quantity <= $product->qty) {
+            //     Checkout::create($checkout);
 
-                return redirect()->back()->with('success', 'Product checked out successfully');
-            }
-            return redirect()->back()->with('warning', 'Product could not be checked out as the you do not have enough stock');
+            //     return redirect()->back()->with('success', 'Product checked out successfully');
+            // }
+            // return redirect()->back()->with('warning', 'Product could not be checked out as the you do not have enough stock');
         }
     }
 

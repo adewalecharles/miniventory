@@ -28,31 +28,33 @@
 
         <div class="col-md-5 col-sm-4">
             <div class="row">
-                <div v-for="(product, index) in products" :key="index">
+                <div v-for="(item, index) in cart" :key="index">
                     <div class="col-md-8 col-sm-6">
                         <div class="form-group">
-                            <label :for="`p${index}`" class="col-sm-2 control-label">Product</label>
+                            <label :for="`item${index}`" class="col-sm-2 control-label">Product</label>
                             {{-- v-model="products[index].object" --}}
-                            <select class="form-control1" @change="updateObject($event, index)" :id="`p${index}`">
+                            {{-- @change="updateAmount(index)" --}}
+                            <select class="form-control1" v-model="cart[index].product" :id="`item${index}`">
                                 <option value="NULL">
                                     <-- Please choose an option -->
                                 </option>
-                                @foreach ($products as $product)
-                                {{-- :disabled="shouldDisable({!! json_encode($product->id) !!})" --}}
-                                <option value="{{$product}}">
-                                    {{$product->name}}</option>
-                                @endforeach
+                                {{-- disabled="shouldDisable(p_index)" --}}
+                                <option v-for="(product, p_index) in products" :key="p_index" :value="product">
+                                    @{{ product.name }} </option>
                             </select>
 
-                            <p> @{{ products[index].object.amount * products[index].quantity }} </p>
+
+                            <p :id="'amount'+index">
+                                @{{ cart[index].product ?  formattedAmount(cart[index].product.amount * cart[index].quantity) : ''  }}
+                            </p>
                         </div>
                     </div>
 
                     <div class="col-md-4 col-sm-2">
                         <div class="form-group">
                             <label :for="`q${index}`" class="col-sm-2 control-label">Quantity</label>
-                            <input class="form-control1" :id="`q${index}`" type="number"
-                                v-model="products[index].quantity" :id="`qty${index}`">
+                            <input class="form-control1" :id="`q${index}`" type="number" v-model="cart[index].quantity"
+                                :id="`qty${index}`">
                         </div>
 
                     </div>
@@ -64,6 +66,8 @@
             </div>
 
         </div>
+
+        Total: @{{ formattedAmount(getTotal) }}
 
 
     </div>
@@ -81,34 +85,66 @@
 @section('extra-js')
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
 <script>
     new Vue ({
             el: "#checkout",
             computed: {
+                formattedAmount(x) {
+                return (x) => x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                },
                 getValue() {
                     return (index) => parseFloat(this.products[index].object.amount * parseInt(this.products[index].quantity))
                 },
-            //     shouldDisable() {
-            //         return value => this.products.find(function (product) {
-            //             return product.object.id == value ? true: false
-            //     })
+                getTotal() {
+                    let total = 0
+                    this.cart.forEach(function(item) {
+                        if (item.product && item.quantity) {
+                            total +=item.product.amount * item.quantity
+                        }
+                    })
+                    return total;
+                }
+                // shouldDisable() {
+                //     return index => this.cart.find(function (item) {
+                //             return item.product.id == 1 ? true: false
+                // })
             // }
             },
             methods: {
                 updateObject($event, index) {
                     this.products[index] = Object.assign({}, this.products[index], event.target.value)
                 },
+                updateAmount (index) {
+                    console.log(this.cart[index].product.amount * this.cart[index].quantity)
+                },
                 checkout() {
-                    console.log(this.name)
-                    console.log(this.products);
+                    if (this.name == '' || this.address == '' ||  this.phone == '') {
+                        toastr.warning ("Please fill all Fields");
+                        return;
+                    }
+
+                    let data = {
+                        customer_address: this.address,
+                        customer_name: this.name,
+                        customer_phone: this.phone,
+                        cart: this.cart
+                    }
+                    axios.post('', data).then (response => {
+                        console.log(response)
+                    }).catch(error => {
+                        toastr.error ("OOPS SERVER ERROR")
+                    })
+
                 },
                 addProduct() {
-                    this.products.push(
-                        {
-                        quantity: 1,
-                        object: {}
-                    }
-                    )
+                    this.cart.push({
+                        quantity: 1
+                    })
                 }
             },
             data: function () {
@@ -116,12 +152,8 @@
                     name: '',
                     phone:'',
                     address: '',
-                    products: [
-                        {
-                            quantity: '',
-                            object: {}
-                        }
-                    ],
+                    products: {!! json_encode($products) !!},
+                    cart: [],
                     selectedProducts: [],
                     product: {
                         quantity:  1,
@@ -130,6 +162,9 @@
             },
             mounted () {
                 console.log("Yeah Babe");
+                this.cart.push({
+                    quantity: 1
+                })
                 // this.products.push(this.product)
             }
         })
