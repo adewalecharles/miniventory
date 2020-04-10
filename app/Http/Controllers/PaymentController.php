@@ -44,10 +44,7 @@ class PaymentController extends Controller
         $paymentDetails = Paystack::getPaymentData();
 
         $user = Auth::user()->id;
-        $usermail =  Auth::user();
         DB::update('update users set subscribed = 1 where id = ' . $user . '');
-
-        // Mail::to($usermail)->send(new payment($usermail, $paymentDetails));
 
         return redirect()->route('home')->with('success', 'You have completed your registration!, we are happy to have you onboard, feel free to contact us at info@miniventory.com if you have any issues');
 

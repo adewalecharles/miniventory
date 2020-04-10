@@ -10,24 +10,24 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'MiniVentory') }}</title>
-
+    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 
-    <link href="{{asset('css/bootstrap.min.css')}}" rel='stylesheet' type='text/css' />
+    <link href="/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->
-    <link href="{{asset('css/style.css')}}" rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="{{asset('css/morris.css')}}" type="text/css"/>
+    <link href="/css/style.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="/css/morris.css" type="text/css"/>
     <!-- Graph CSS -->
-    <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet"> 
+    <link href="/css/font-awesome.css" rel="stylesheet"> 
     <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <!-- lined-icons -->
-    <link rel="stylesheet" href="{{asset('css/icon-font.min.css')}}" type='text/css' />
+    <link rel="stylesheet" href="/css/icon-font.min.css" type='text/css' />
 </head>
 <body>
 
@@ -56,7 +56,7 @@
           @if ($errors->any())
           <div class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Whoops!</strong> {{session('warning')}}<br><br>
+            <strong>Whoops!</strong> {{session('danger')}}<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>

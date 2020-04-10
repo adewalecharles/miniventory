@@ -24,7 +24,7 @@
                         @foreach($products as $product)
                         <tr>
                             <th scope="row">{{++$i}}</th>
-                            <td><img src="{{$product->picture ?? ''}}" alt="product image" width="50px" height="50px"></td>
+                            <td><img src="https://e-ventory.s3.amazonaws.com/{{$product->picture}}" alt="product image" width="50px" height="50px"></td>
                         <td>{{$product->name ?? ''}}</td>
                             <td>{{$product->purchased_date ?? ''}}</td>
                         <td>{{$product->expiry_date ?? ''}}</td>

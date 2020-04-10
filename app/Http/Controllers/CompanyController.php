@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -57,13 +58,13 @@ class CompanyController extends Controller
         ]);
 
         $data = $request->all();
-        if ($request->has('picture')) {
-            $avataruploaded = request()->file('picture');
-            $avatarname = time() . '.' . $avataruploaded->getClientOriginalExtension();
-            $avatarpath = public_path('/companies/');
-            $avataruploaded->move($avatarpath, $avatarname);
+        if ($request->hasfile('picture')) {
+            $file = $request->file('picture');
+            $name = time() . $file->getClientOriginalName();
+            $filePath = 'images/' . $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            $data['picture'] = '/companies/' . $avatarname;
+            $data['picture'] = $filePath;
         }
 
         Company::create($data);
@@ -79,10 +80,11 @@ class CompanyController extends Controller
             $products = Product::where('company_id',  Auth::user()->company->id)->simplePaginate(5);
 
             return view('home', compact('products', 'expiredproducts'))
-                ->with('i', (request()->input('page', 1) - 1) * 5);;;
+                ->with('i', (request()->input('page', 1) - 1) * 5)
+                ->with('success', 'You have completed your registration!, we are happy to have you onboard, feel free to contact us at info@miniventory.com if you have any issues');;;;
         }
 
-        return view('payment.pay')->with('success', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
+        return view('payment.pay')->with('warning', 'You have succesfully created your account, kindly pay to start getting inventory of all your goods!');
     }
 
     /**

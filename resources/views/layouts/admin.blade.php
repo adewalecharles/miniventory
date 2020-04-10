@@ -8,7 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<title>{{Auth::user()->company->name ?? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
+    {{-- <title>{{ config('app.name', 'MiniVentory') }}</title> --}}
+<title>E-ventory</title>
 
 
     <!-- Fonts -->
@@ -17,9 +18,9 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
-    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
 
     <link href="/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/png">
     <!-- Custom CSS -->
     <link href="/css/style.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="/css/morris.css" type="text/css"/>
@@ -29,7 +30,7 @@
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- lined-icons -->
-    <link rel="stylesheet" href="/css/icon-font.min.css" type='text/css' />
+    <link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
 </head>
 <body>
     <div class="page-container">
@@ -39,7 +40,7 @@
                   <!--header start here-->
                      <div class="header-main">
                          <div class="logo-w3-agile">
-                                     <h1 style="overflow:visible;"><a href="{{route('home')}}">{{\Illuminate\Support\Str::limit(Auth::user()->company->name, 7) }}</a></h1>
+                                     <h1 style="overflow:visible;"><a href="{{route('home')}}">E-vent..</a></h1>
                                  </div>
 						<div class="profile_details w3l pull-right">		
 								<ul>
@@ -144,12 +145,12 @@
                 <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
                    <div class="menu">
                             <ul id="menu" >
-                                <li><a href="{{route('home')}}"><i class="fa fa-tachometer"></i> <span>Dashboard</span><div class="clearfix"></div></a></li>
+                                {{-- <li><a href="{{route('home')}}"><i class="fa fa-tachometer"></i> <span>Dashboard</span><div class="clearfix"></div></a></li>
                                 
                                  <li id="menu-academico" ><i class="fa fa-list" aria-hidden="true"></i><a href="{{route('category.index')}}"><span>Category</span><div class="clearfix"></div></a></li>
                             <li id="menu-academico"><i class="fa fa-user" aria-hidden="true"></i><a href="{{route('brand.index')}}"><span>Brand</span><div class="clearfix"></div></a></li>
                              <li><i class="fa fa-box" aria-hidden="true"></i><a href="{{route('products.index')}}"> <span>Product</span><div class="clearfix"></div></a></li>
-                            <li><i class="fa fa-icon" aria-hidden="true"></i><a href="{{route('checkout.index')}}"><span>Checkout</span><div class="clearfix"></div></a></li>
+                            <li><i class="fa fa-icon" aria-hidden="true"></i><a href="{{route('checkout.index')}}"><span>Checkout</span><div class="clearfix"></div></a></li> --}}
                           </ul>
                         </div>
                       </div>
