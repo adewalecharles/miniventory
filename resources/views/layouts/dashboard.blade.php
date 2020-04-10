@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <title>{{ config('app.name', 'MiniVentory') }}</title> --}}
-<title>{{Auth::user()->company->name ?eb? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
+<title>{{Auth::user()->company->name ?? 'E-Ventory'}} | {{Auth::user()->company->tagline ?? ''}}</title>
 
 
     <!-- Fonts -->
@@ -135,6 +135,7 @@
     </div>
     </div>
       <!--//content-inner-->
+      
     	<!--/sidebar-menu-->
         <div class="sidebar-menu">
             <header class="logo1">
@@ -144,7 +145,6 @@
                    <div class="menu">
                             <ul id="menu" >
                                 <li><a href="{{route('home')}}"><i class="fa fa-tachometer"></i> <span>Dashboard</span><div class="clearfix"></div></a></li>
-                                
                                 
                                  <li id="menu-academico" ><i class="fa fa-list" aria-hidden="true"></i><a href="{{route('category.index')}}"><span>Category</span><div class="clearfix"></div></a></li>
                             <li id="menu-academico"><i class="fa fa-user" aria-hidden="true"></i><a href="{{route('brand.index')}}"><span>Brand</span><div class="clearfix"></div></a></li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\Company;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -23,16 +24,17 @@ class AdminController extends Controller
     public function index()
     {
         $subscribeUsers = User::where('subscribed', '=', 1)
-            ->where(auth()->user()->company != null)
-            ->get()
-            ->simplePaginate(10);
+            ->get();
 
         $unsubscribeUsers = User::where('subscribed', '=', 0)
-            ->where(auth()->user()->company == null)
-            ->get()
-            ->simplePaginate(10);
+            ->get();
 
-        return view('admin.index');
+        $users = User::all();
+
+        $companies = Company::all();
+
+        return view('admin.index', compact('subscribeUsers', 'unsubscribeUsers', 'users', 'companies'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);;;
     }
 
     /**
