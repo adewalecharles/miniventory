@@ -15,6 +15,9 @@ Address: {{ $user->company->address}}<br>
 
 We are happy to have you onboard!
 
+@component('mail::button', ['url' => config('app.url') . '/login'])
+Login
+@endcomponent
 
 Thanks,<br>
 {{ config('app.name') }}
