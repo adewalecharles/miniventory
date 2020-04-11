@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::group(['middleware' => 'auth'], function () {
 
 Route::resource('admin', 'AdminController');
 
@@ -36,3 +37,4 @@ Route::get('/checkout/invoice/{reference}', 'CheckoutController@checkout');
 Route::get('payment/pay', 'PaymentController@index')->name('payment-process');
 Route::post('payment/pay', 'PaymentController@redirectToGateway')->name('pay');
 Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
+});
