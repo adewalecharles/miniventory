@@ -185,7 +185,8 @@
         </table>
 
         <div class="d-flex justify-content-center">
-            <button class="btn btn-primary" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+            <button class="btn btn-primary" onclick="window.print()"><i class="fa fa-print"></i> Print</button>&nbsp;
+            &nbsp;
             <a class="btn btn-secondary" href="{{ route('home') }}"> Back</a>
         </div>
     </div>
