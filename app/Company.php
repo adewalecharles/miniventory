@@ -27,4 +27,8 @@ class Company extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function checkouts (){
+        return $this->hasMany(Checkout::class);
+    }
 }

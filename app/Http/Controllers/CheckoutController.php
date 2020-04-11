@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Checkout;
 use App\Product;
+use App\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -47,20 +50,76 @@ class CheckoutController extends Controller
             'customer_address' => 'required',
         ]);
 
+                $data = $request->all();
 
-        $data = $request->all();
+
+
+            foreach ($data['cart'] as  $item) {
+
+                $product = Product::findOrFail($item['product']['id']);
+
+                if ($product->qty < $item['quantity']) return response()->json([
+                    'message' => $product->name +" should not be more than ".$product->qty
+                ], 401);
+
+            }
 
         $data['company_id'] = Auth::user()->company->id;
 
-        foreach ($data['cart'] as  $item) {
 
-            // if ($quantity <= $product->qty) {
-            //     Checkout::create($checkout);
+        try {
+            DB::beginTransaction();
 
-            //     return redirect()->back()->with('success', 'Product checked out successfully');
-            // }
-            // return redirect()->back()->with('warning', 'Product could not be checked out as the you do not have enough stock');
+             $data['reference'] =Str::random(10);
+
+
+            $checkout = Checkout::create($data);
+
+            $totalAmount = 0;
+
+             foreach ($data['cart'] as  $item) {
+
+                $product = Product::findOrFail($item['product']['id']);
+
+                $totalAmount += $item['quantity'] * $product->amount;
+
+                Purchase::create([
+                    'checkout_id' => $checkout->id,
+                    'product_id' => $product->id,
+                    'initial_quantity' => $product->qty,
+                    'final_quantity' => $product->qty - $item['quantity'],
+                    'amount_at_sale' => $product->amount
+                ]);
+
+                $product->update([
+                    'qty' => $product->qty - $item['quantity']
+                ]);
+
+
+            }
+
+            $checkout->update([
+                'total_amount' => $totalAmount
+            ]);
+
+            DB::commit();
+
+
+
+        return response()->json([
+            'message' => 'Checkout was successful',
+            'checkout' => $checkout,
+            'status' => true
+        ], 200);
+
+
+
+        }catch(\Exception $e) {
+            return response()->json(['error' => true, 'message' => 'Error ocurred']);
         }
+
+
+
     }
 
     /**
@@ -113,13 +172,11 @@ class CheckoutController extends Controller
         return view('checkout.index')->with('warning', 'Checked out product deleted succeesfully');
     }
 
-    // public function invoice()
-    // {
-    //     $checkouts = Checkout::where('company_id', Auth::user()->company->id);
-    //     return view('checkout.invoice', compact('checkouts'));
+    public function checkout($reference)
+    {
+        $checkout = Checkout::where("reference", $reference)->firstOrFail();
 
-    //     if (isset($_POST['print'])) {
-    //         # code...
-    //     }
-    // }
+        return view('checkout.invoice', compact('checkout'));
+
+    }
 }

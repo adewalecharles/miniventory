@@ -35,6 +35,11 @@ class DatabaseSeeder extends Seeder
             'amount' => rand(1000, 10000)
         ]);
     }
+
+    DB::table('brands')->insert([
+        'name' => 'Nike',
+        'company_id' => 1
+    ]);
     }
 
 

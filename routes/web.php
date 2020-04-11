@@ -31,6 +31,7 @@ Route::resource('products', 'ProductController');
 Route::resource('category', 'CategoryController');
 Route::resource('company', 'CompanyController');
 Route::resource('checkout', 'CheckoutController');
+Route::get('/checkout/invoice/{reference}', 'CheckoutController@checkout');
 
 Route::get('payment/pay', 'PaymentController@index')->name('payment-process');
 Route::post('payment/pay', 'PaymentController@redirectToGateway')->name('pay');

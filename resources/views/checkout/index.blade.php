@@ -135,7 +135,12 @@
                         cart: this.cart
                     }
                     axios.post('', data).then (response => {
-                        console.log(response)
+                        if (response.data.status) {
+                            toastr.success("Transaction Success");
+                            setTimeout(() => {
+                                location.href = '/checkout/invoice/'+response.data.checkout.reference;
+                            }, 3000)
+                        }
                     }).catch(error => {
                         toastr.error ("OOPS SERVER ERROR")
                     })

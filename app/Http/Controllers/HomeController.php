@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Checkout;
 use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,7 +48,9 @@ class HomeController extends Controller
 
         $products = Product::where('company_id',  Auth::user()->company->id)->simplePaginate(5);
 
-        return view('home', compact('products', 'expiredproducts'))
+        $checkouts = Checkout::where('company_id',  Auth::user()->company->id)->simplePaginate(5);
+
+        return view('home', compact('products', 'expiredproducts', 'checkouts'))
             ->with('i', (request()->input('page', 1) - 1) * 5);;;
     }
 }
