@@ -6,7 +6,7 @@
 </ol>
 <div id="checkout">
     <div class="container">
-        <div class="col-md-6 col-sm-4 agile-info-stat">
+        <div class="col-md-12 col-sm-8 agile-info-stat">
             @csrf
             <div class="form-group">
                 <label for="customer_name" class="col-sm-2 control-label">Customer Name</label>
@@ -26,10 +26,10 @@
 
         </div>
 
-        <div class="col-md-5 col-sm-4">
+        <div class="col-md-12 col-sm-8">
             <div class="row">
                 <div v-for="(item, index) in cart" :key="index">
-                    <div class="col-md-8 col-sm-6">
+                    <div class="col-md-6 col-sm-4">
                         <div class="form-group">
                             <label :for="`item${index}`" class="col-sm-2 control-label">Product</label>
                             {{-- v-model="products[index].object" --}}
@@ -42,11 +42,6 @@
                                 <option v-for="(product, p_index) in products" :key="p_index" :value="product">
                                     @{{ product.name }} </option>
                             </select>
-
-
-                            <p :id="'amount'+index">
-                                @{{ cart[index].product ?  formattedAmount(cart[index].product.amount * cart[index].quantity) : ''  }}
-                            </p>
                         </div>
                     </div>
 
@@ -58,6 +53,9 @@
                         </div>
 
                     </div>
+                    <p class="col-md-2 mt-4" :id="'amount'+index">
+                        #@{{ cart[index].product ?  formattedAmount(cart[index].product.amount * cart[index].quantity) : ''  }}
+                    </p>
                 </div>
             </div>
             <div class="row justify-content-end">
@@ -67,7 +65,7 @@
 
         </div>
 
-        Total: @{{ formattedAmount(getTotal) }}
+        Total: #@{{ formattedAmount(getTotal) }}
 
 
     </div>
