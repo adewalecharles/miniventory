@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     
     <!--====== Title ======-->
-    <title>Miniventory</title>
+    <title>E-ventory</title>
     
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -127,7 +127,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="header-hero-content text-center">
-                            <h3 class="header-sub-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">Miniventory</h3>
+                            <h3 class="header-sub-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.2s">E-ventory</h3>
                             <h2 class="header-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.5s">Keep track of all your Goods and activities in a single dashboard</h2>
                             {{-- <p class="text wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.8s">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor</p> --}}
                             <a href="{{ route ('register') }}" class="main-btn wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="1.1s">Get Started</a>
@@ -200,7 +200,7 @@
                         </div>
                         <div class="services-content mt-30">
                             <h4 class="services-title"><a href="#">Simple</a></h4>
-                            <p class="text">Miniventory is a simple inventory app, it is built to be easy to use and also serve the purpose it was built for.</p>
+                            <p class="text">E-ventory is a simple inventory app, it is built to be easy to use and also serve the purpose it was built for.</p>
                         </div>
                     </div> <!-- single services -->
                 </div>
@@ -213,7 +213,7 @@
                         </div>
                         <div class="services-content mt-30">
                             <h4 class="services-title"><a href="#">Robust</a></h4>
-                            <p class="text">MiniVentory can serve small business that wishes to keep rack of how goods comes in and out of there store in a single dashboard.</p>
+                            <p class="text">E-ventory can serve small business that wishes to keep rack of how goods comes in and out of there store in a single dashboard.</p>
                         </div>
                     </div> <!-- single services -->
                 </div>
@@ -226,7 +226,7 @@
                         </div>
                         <div class="services-content mt-30">
                             <h4 class="services-title"><a href="#">Effective & Cost Friendly</a></h4>
-                            <p class="text">When it comes to inventory and stock management, Miniventory is effective and also very affordable, you get get charged once in a lifetime.</p>
+                            <p class="text">When it comes to inventory and stock management, E-ventory is effective and also very affordable, you get get charged once in a lifetime.</p>
                         </div>
                     </div> <!-- single services -->
                 </div>
