@@ -38,7 +38,7 @@
 						<a href="{{route('login')}}">Already have an account?</a>
 				</div>
 				<div class="footer">
-                    <p>© 2020 MiniVentory. All Rights Reserved | Design and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
+                    <p>© 2020, iCredence Ltd</p>
 				</div>
 	</div>
 	</div>

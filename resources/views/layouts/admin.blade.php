@@ -130,7 +130,7 @@
     <!--inner block end here-->
     <!--copy rights start here-->
     <div class="copyrights">
-         <p>© 2020 MiniVentory. All Rights Reserved | Designed and Developed By   <a href="https://mbh.ng" target="_blank">MybudgetHosting</a> </p>
+         <p>© 2020, iCredence Ltd </p>
     </div>	
     <!--COPY rights end here-->
     </div>
